@@ -16,9 +16,20 @@
   gap: 30px;
 }
 
+@media screen and (max-width: 800px) {
+  #board {
+    grid-template-columns: 80px 80px 80px;
+    grid-template-rows: 80px 80px 80px;
+  }
+  #board button {
+    font-size: 50px !important;
+  }
+}
+
 #board button {
   padding: 0;
   font-size: 120px;
+  border: 1px black solid;
 }
 
 .X {
