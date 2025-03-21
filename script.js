@@ -84,10 +84,9 @@ function highlightWinningCells(cells) {
 function resetGame() {
   for (let i = 0; i < 9; i++) {
     document.getElementById(`btn-${i}`).classList.remove("winning-cell");
-    if (!gameActive && document.getElementById("alert").length > 0) {
-      document.getElementById("alert")[0].remove();
-    }
   }
+  const alertElement = document.getElementById("alert");
+  if (!gameActive && alertElement) alertElement.remove();
 
   initializeGame();
 }
