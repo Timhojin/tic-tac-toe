@@ -22,6 +22,7 @@ function handleMove(position) {
   gameBoard[position] = xIsNext ? "X" : "O";
   const cell = document.getElementById(`btn-${position}`);
   cell.innerHTML = xIsNext ? "X" : "O";
+  cell.className += xIsNext ? "X" : "O";
 
   xIsNext = !xIsNext;
 
@@ -32,12 +33,12 @@ function calculateWinner() {
   const pattern = [
     [0, 1, 2],
     [3, 4, 5],
-    [6, 7, 8], // rows
+    [6, 7, 8],
     [0, 3, 6],
     [1, 4, 7],
-    [2, 5, 8], // columns
+    [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6], // diagonals
+    [2, 4, 6],
   ];
 
   for (let i = 0; i < pattern.length; i++) {
@@ -67,26 +68,30 @@ function checkDraw() {
 }
 
 function updateStatus(result) {
-  const textAlert = document.createElement("div");
-  const container = document.getElementById("board");
-  textAlert.id = "alert";
-  container.appendChild(textAlert);
-  textAlert.innerHTML = result;
+  const status = document.getElementById("status");
+  status.innerText = result;
+
+  document.getElementById("reset-txt").className += "blinking-text";
+
   gameActive = false;
 }
 
 function highlightWinningCells(cells) {
-  for (let i in cells) {
-    document.getElementById(`btn-${i}`).className += "winning-cell";
+  for (let i = 0; i < cells.length; i++) {
+    const cell = document.getElementById(`btn-${cells[i]}`);
+    cell.classList.remove(gameBoard[cells[i]] === "X" ? "X" : "O");
+    cell.className += "winning-cell";
   }
 }
 
 function resetGame() {
   for (let i = 0; i < 9; i++) {
     document.getElementById(`btn-${i}`).classList.remove("winning-cell");
+    document.getElementById(`btn-${i}`).classList.remove("X");
+    document.getElementById(`btn-${i}`).classList.remove("O");
   }
-  const alertElement = document.getElementById("alert");
-  if (!gameActive && alertElement) alertElement.remove();
+  document.getElementById("status").innerText = "Let's Play Tic-Tac-Toe!";
+  document.getElementById("reset-txt").classList.remove("blinking-text");
 
   initializeGame();
 }
